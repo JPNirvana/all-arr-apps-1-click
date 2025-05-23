@@ -172,6 +172,28 @@ services:
     restart: unless-stopped
     env_file:
       - '.env'
+
+
+#   ██████╗ █████╗ ██╗     ██╗██████╗ ██████╗ ███████╗
+#  ██╔════╝██╔══██╗██║     ██║██╔══██╗██╔══██╗██╔════╝
+#  ██║     ███████║██║     ██║██████╔╝██████╔╝█████╗  
+#  ██║     ██╔══██║██║     ██║██╔══██╗██╔══██╗██╔══╝  
+#  ╚██████╗██║  ██║███████╗██║██████╔╝██║  ██║███████╗
+#   ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝╚═════╝ ╚═╝  ╚═╝╚══════╝                                                  
+  calibre:
+    image: lscr.io/linuxserver/calibre:latest
+    container_name: calibre
+    volumes:
+      - ${ARRPATH}Calibre/config:/config
+      - ${ARRPATH}Readarr/books:/data/Books
+      - /mnt/usbMedia01:/mnt/usbMedia01
+      - /mnt/usbMedia02:/mnt/usbMedia02
+      - /mnt/usbMedia03:/mnt/usbMedia03      
+    ports:
+      - 8080:8080
+      - 8181:8181
+      - 8081:8081
+    restart: unless-stopped
           
 #  ██████╗ ██████╗ ██╗████████╗████████╗ ██████╗ ██████╗ ██████╗ ███████╗███╗   ██╗████████╗
 # ██╔═══██╗██╔══██╗██║╚══██╔══╝╚══██╔══╝██╔═══██╗██╔══██╗██╔══██╗██╔════╝████╗  ██║╚══██╔══╝
