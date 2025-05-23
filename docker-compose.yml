@@ -168,7 +168,7 @@ services:
     ports:
       - 5055:5055
     volumes:
-      - ${ARRPATH}JellySeerr/config:/config
+      - ${ARRPATH}JellySeerr/config:/app/config
     restart: unless-stopped
     env_file:
       - '.env'
