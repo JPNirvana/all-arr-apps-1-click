@@ -100,6 +100,33 @@ services:
     restart: unless-stopped
     env_file:
       - '.env'
+
+
+# ██████╗  █████╗ ███████╗ █████╗ ██████╗ ██████╗ 
+# ██╔══██╗██╔══██╗╚══███╔╝██╔══██╗██╔══██╗██╔══██╗
+# ██████╔╝███████║  ███╔╝ ███████║██████╔╝██████╔╝
+# ██╔══██╗██╔══██║ ███╔╝  ██╔══██║██╔══██╗██╔══██╗
+# ██████╔╝██║  ██║███████╗██║  ██║██║  ██║██║  ██║
+# ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
+
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - ${ARRPATH}Bazarr/config:/config
+      - ${ARRPATH}Radarr/movies:/movies #optional
+      - ${ARRPATH}Sonarr/tvshows:/tv #optional
+    ports:
+      - 6767:6767
+    restart: unless-stopped
+
+                                                
+
+
       
 # ██╗     ██╗██████╗  █████╗ ██████╗ ██████╗ 
 # ██║     ██║██╔══██╗██╔══██╗██╔══██╗██╔══██╗
@@ -170,25 +197,25 @@ services:
 # ╚█████╔╝███████╗███████╗███████╗██║   ██║     ██║██║ ╚████║
 #  ╚════╝ ╚══════╝╚══════╝╚══════╝╚═╝   ╚═╝     ╚═╝╚═╝  ╚═══╝
      
-  jellyfin:
-    image: linuxserver/jellyfin
-    container_name: jellyfin
-    ports:
-      - '8096:8096/tcp'   # Jellyfin web interface
-      - '7359:7359/udp'   # Network discovery
-      - '1900:1900/udp'   # DLNA port
-    volumes:
-      - ${ARRPATH}Jellyfin/config:/config
-      - ${ARRPATH}Radarr/movies:/data/Movies
-      - ${ARRPATH}Sonarr/tvshows:/data/TVShows
-      - ${ARRPATH}Lidarr/music:/data/Music
-      - ${ARRPATH}Readarr/books:/data/Books
-      - /mnt/usbMedia01:/mnt/usbMedia01
-      - /mnt/usbMedia02:/mnt/usbMedia02
-      - /mnt/usbMedia03:/mnt/usbMedia03
-    env_file:
-      - '.env'
-    restart: unless-stopped
+#  jellyfin:
+#    image: linuxserver/jellyfin
+#    container_name: jellyfin
+#    ports:
+#      - '8096:8096/tcp'   # Jellyfin web interface
+#      - '7359:7359/udp'   # Network discovery
+#      - '1900:1900/udp'   # DLNA port
+#    volumes:
+#      - ${ARRPATH}Jellyfin/config:/config
+#      - ${ARRPATH}Radarr/movies:/data/Movies
+#      - ${ARRPATH}Sonarr/tvshows:/data/TVShows
+#      - ${ARRPATH}Lidarr/music:/data/Music
+#      - ${ARRPATH}Readarr/books:/data/Books
+#      - /mnt/usbMedia01:/mnt/usbMedia01
+#      - /mnt/usbMedia02:/mnt/usbMedia02
+#      - /mnt/usbMedia03:/mnt/usbMedia03
+#    env_file:
+#      - '.env'
+#    restart: unless-stopped
 
 
 #       ██╗███████╗██╗     ██╗  ██╗   ██╗███████╗███████╗███████╗██████╗ ██████╗ 
