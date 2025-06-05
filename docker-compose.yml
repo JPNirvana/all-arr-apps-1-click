@@ -12,12 +12,12 @@ services:
     container_name: gluetun
     ports:
       - 6789:6789      # NZBGet
-      - 9696:9696      # Prowlarr
-      - 8989:8989      # Sonarr
-      - 7878:7878      # Radarr
-      - 8686:8686      # Lidarr
-      - 8787:8787      # Readarr
-      - 5055:5055      # JellySeerr
+      #- 9696:9696      # Prowlarr
+      #- 8989:8989      # Sonarr
+      #- 7878:7878      # Radarr
+      #- 8686:8686      # Lidarr
+      #- 8787:8787      # Readarr
+      #- 5055:5055      # JellySeerr
       - 8080:8080      # QBittorrent
       - 6881:6881      # QBittorrent
       - 6881:6881/udp  # QBittorrent
@@ -46,7 +46,9 @@ services:
   prowlarr:
     image: linuxserver/prowlarr:latest
     container_name: prowlarr
-    network_mode: "service:gluetun"
+    #network_mode: "service:gluetun"
+    ports:
+    - 9696:9696      # Prowlarr
     volumes:
       - ${ARRPATH}Prowlarr/config:/config
       - ${ARRPATH}Prowlarr/backup:/data/Backup
@@ -65,7 +67,9 @@ services:
   sonarr:
     image: linuxserver/sonarr:latest
     container_name: sonarr
-    network_mode: "service:gluetun"
+    #network_mode: "service:gluetun"
+    ports:
+    - 8989:8989      # Sonarr
     volumes:
       - ${ARRPATH}Sonarr/config:/config
       - ${ARRPATH}Sonarr/backup:/data/Backup
@@ -85,7 +89,9 @@ services:
   radarr:
     image: linuxserver/radarr:latest
     container_name: radarr
-    network_mode: "service:gluetun"
+    #network_mode: "service:gluetun"
+    ports:
+    - 7878:7878      # Radarr
     volumes:
       - ${ARRPATH}Radarr/config:/config
       - ${ARRPATH}Radarr/movies:/data/movies
@@ -105,7 +111,9 @@ services:
   lidarr:
     image: linuxserver/lidarr:latest
     container_name: lidarr
-    network_mode: "service:gluetun"
+    #network_mode: "service:gluetun"
+    ports:
+    - 8686:8686      # Lidarr
     volumes:
       - ${ARRPATH}Lidarr/config:/config
       - ${ARRPATH}Lidarr/music:/data/musicfolder
@@ -124,7 +132,9 @@ services:
   readarr:
     image: linuxserver/readarr:develop
     container_name: readarr
-    network_mode: "service:gluetun"
+    #network_mode: "service:gluetun"
+    ports:
+    - 8787:8787      # Readarr
     volumes:
       - ${ARRPATH}Readarr/config:/config
       - ${ARRPATH}Readarr/books:/data/books
@@ -191,7 +201,9 @@ services:
   jellyseerr:
     image: fallenbagel/jellyseerr:latest
     container_name: jellyseerr
-    network_mode: "service:gluetun"
+    #network_mode: "service:gluetun"
+    ports:
+    - 5055:5055      # JellySeerr
     volumes:
       - ${ARRPATH}JellySeerr/config:/app/config
     restart: unless-stopped
