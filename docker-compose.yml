@@ -191,6 +191,7 @@ services:
   jellyseerr:
     image: fallenbagel/jellyseerr:latest
     container_name: jellyseerr
+    network_mode: "service:gluetun"
     volumes:
       - ${ARRPATH}JellySeerr/config:/app/config
     restart: unless-stopped
