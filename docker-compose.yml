@@ -9,7 +9,7 @@ services:
 # ╚═════╝ ╚══════╝ ╚═════╝ ╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═══╝
   gluetun:
     image: qmcgaw/gluetun
-    container_name: gluetunVPN
+    container_name: gluetun
     ports:
       - 6789:6789      # NZBGet
       - 9696:9696      # Prowlarr
@@ -20,10 +20,10 @@ services:
       - 5055:5055      # JellySeerr
       - 8080:8080      # QBittorrent
       - 6881:6881      # QBittorrent
-      - 6881:6881/udp  # QBittorrent
-      - 8096:8096      # jellyfin
-      - 1900:1900      # jellyfin
-      - 7359:7359      # jellyfin
+      - '6881:6881/udp'  # QBittorrent
+      - '8096:8096/tcp'   # Jellyfin web interface
+      - '7359:7359/udp'   # Network discovery
+      - '1900:1900/udp'   # DLNA port
     cap_add:
       - NET_ADMIN
     devices:
@@ -165,10 +165,6 @@ services:
   jellyfin:
     image: linuxserver/jellyfin
     container_name: jellyfin
-    ports:
-      - '8096:8096/tcp'   # Jellyfin web interface
-      - '7359:7359/udp'   # Network discovery
-      - '1900:1900/udp'   # DLNA port
     volumes:
       - ${ARRPATH}Jellyfin/config:/config
       - ${ARRPATH}Radarr/movies:/data/Movies
