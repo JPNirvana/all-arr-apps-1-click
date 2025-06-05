@@ -21,9 +21,7 @@ services:
       - 8080:8080      # QBittorrent
       - 6881:6881      # QBittorrent
       - '6881:6881/udp'  # QBittorrent
-      - '8096:8096/tcp'   # Jellyfin web interface
-      - '7359:7359/udp'   # Network discovery
-      - '1900:1900/udp'   # DLNA port
+
     cap_add:
       - NET_ADMIN
     devices:
@@ -49,6 +47,7 @@ services:
     image: linuxserver/prowlarr:latest
     container_name: prowlarr
     hostname: prowlarr
+    network_mode: "service:gluetun"
     volumes:
       - ${ARRPATH}Prowlarr/config:/config
       - ${ARRPATH}Prowlarr/backup:/data/Backup
@@ -68,6 +67,7 @@ services:
     image: linuxserver/sonarr:latest
     container_name: sonarr
     hostname: sonarr
+    network_mode: "service:gluetun"
     volumes:
       - ${ARRPATH}Sonarr/config:/config
       - ${ARRPATH}Sonarr/backup:/data/Backup
@@ -88,6 +88,7 @@ services:
     image: linuxserver/radarr:latest
     container_name: radarr
     hostname: radarr
+    network_mode: "service:gluetun"
     volumes:
       - ${ARRPATH}Radarr/config:/config
       - ${ARRPATH}Radarr/movies:/data/movies
@@ -108,6 +109,7 @@ services:
     image: linuxserver/lidarr:latest
     container_name: lidarr
     hostname: lidarr
+    network_mode: "service:gluetun"
     volumes:
       - ${ARRPATH}Lidarr/config:/config
       - ${ARRPATH}Lidarr/music:/data/musicfolder
@@ -127,6 +129,7 @@ services:
     image: linuxserver/readarr:develop
     container_name: readarr
     hostname: readarr
+    network_mode: "service:gluetun"
     volumes:
       - ${ARRPATH}Readarr/config:/config
       - ${ARRPATH}Readarr/books:/data/books
@@ -165,6 +168,10 @@ services:
   jellyfin:
     image: linuxserver/jellyfin
     container_name: jellyfin
+    ports:
+      - '8096:8096/tcp'   # Jellyfin web interface
+      - '7359:7359/udp'   # Network discovery
+      - '1900:1900/udp'   # DLNA port
     volumes:
       - ${ARRPATH}Jellyfin/config:/config
       - ${ARRPATH}Radarr/movies:/data/Movies
