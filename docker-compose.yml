@@ -1,5 +1,40 @@
 services:       
 
+
+#  ██████╗ ██╗     ██╗   ██╗███████╗████████╗██╗   ██╗███╗   ██╗
+# ██╔════╝ ██║     ██║   ██║██╔════╝╚══██╔══╝██║   ██║████╗  ██║
+# ██║  ███╗██║     ██║   ██║█████╗     ██║   ██║   ██║██╔██╗ ██║
+# ██║   ██║██║     ██║   ██║██╔══╝     ██║   ██║   ██║██║╚██╗██║
+# ╚██████╔╝███████╗╚██████╔╝███████╗   ██║   ╚██████╔╝██║ ╚████║
+# ╚═════╝ ╚══════╝ ╚═════╝ ╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═══╝
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetunVPN
+    ports:
+      - 6789:6789      # NZBGet
+      - 9696:9696      # Prowlarr
+      - 8989:8989      # Sonarr
+      - 7878:7878      # Radarr
+      - 8686:8686      # Lidarr
+      - 8787:8787      # Readarr
+      - 5055:5055      # JellySeerr
+      - 8080:8080      # QBittorrent
+      - 6881:6881      # QBittorrent
+      - 6881:6881/udp  # QBittorrent
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      - VPN_SERVICE_PROVIDER=privado
+      - VPN_Type=wireguard
+      - OPENVPN_USER=nhtkryxkftml
+      - OPENVPN_PASSWORD=4UjRo>T!*^m=
+      - SERVER_COUNTRIES=Netherlands
+                                                             
+
+
+
 # ██████╗ ██████╗  ██████╗ ██╗    ██╗██╗      █████╗ ██████╗ ██████╗ 
 # ██╔══██╗██╔══██╗██╔═══██╗██║    ██║██║     ██╔══██╗██╔══██╗██╔══██╗
 # ██████╔╝██████╔╝██║   ██║██║ █╗ ██║██║     ███████║██████╔╝██████╔╝
@@ -15,8 +50,6 @@ services:
       - ${ARRPATH}Prowlarr/config:/config
       - ${ARRPATH}Prowlarr/backup:/data/Backup
       - ${ARRPATH}Downloads:/downloads
-    ports:
-      - 9696:9696
     restart: unless-stopped
     env_file:
       - '.env'
@@ -37,8 +70,6 @@ services:
       - ${ARRPATH}Sonarr/backup:/data/Backup
       - ${ARRPATH}Sonarr/tvshows:/data/tvshows
       - ${ARRPATH}Downloads:/downloads
-    ports:
-      - 8989:8989
     restart: unless-stopped
     env_file:
       - '.env'
@@ -59,8 +90,6 @@ services:
       - ${ARRPATH}Radarr/movies:/data/movies
       - ${ARRPATH}Radarr/backup:/data/Backup
       - ${ARRPATH}Downloads:/downloads
-    ports:
-      - 7878:7878
     restart: unless-stopped
     env_file:
       - '.env'
@@ -80,8 +109,6 @@ services:
       - ${ARRPATH}Lidarr/config:/config
       - ${ARRPATH}Lidarr/music:/data/musicfolder
       - ${ARRPATH}Downloads:/downloads
-    ports:
-      - 8686:8686
     restart: unless-stopped
     env_file:
       - '.env'
@@ -101,8 +128,6 @@ services:
       - ${ARRPATH}Readarr/config:/config
       - ${ARRPATH}Readarr/books:/data/books
       - ${ARRPATH}Downloads:/downloads
-    ports:
-      - 8787:8787
     restart: unless-stopped
     env_file:
       - '.env'
@@ -113,19 +138,19 @@ services:
 # ██╔══██║██║   ██║██║╚██╔╝██║██╔══██║██╔══██╗██╔══██╗
 # ██║  ██║╚██████╔╝██║ ╚═╝ ██║██║  ██║██║  ██║██║  ██║
 # ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
-        
-  homarr:
-    container_name: homarr
-    image: ghcr.io/ajnart/homarr:latest
-    restart: unless-stopped
-    volumes:
-      - ${ARRPATH}Homarr/configs:/app/data/configs
-      - ${ARRPATH}Homarr/icons:/app/public/icons
-      - ${ARRPATH}Homarr/data:/data
-    ports:
-      - '7575:7575'
-    env_file:
-      - '.env'
+#        
+#  homarr:
+#    container_name: homarr
+#    image: ghcr.io/ajnart/homarr:latest
+#    restart: unless-stopped
+#    volumes:
+#      - ${ARRPATH}Homarr/configs:/app/data/configs
+#      - ${ARRPATH}Homarr/icons:/app/public/icons
+#      - ${ARRPATH}Homarr/data:/data
+#    ports:
+#      - '7575:7575'
+#    env_file:
+#      - '.env'
 
 #      ██╗███████╗██╗     ██╗  ██╗   ██╗███████╗██╗███╗   ██╗
 #      ██║██╔════╝██║     ██║  ╚██╗ ██╔╝██╔════╝██║████╗  ██║
@@ -165,8 +190,6 @@ services:
   jellyseerr:
     image: fallenbagel/jellyseerr:latest
     container_name: jellyseerr
-    ports:
-      - 5055:5055
     volumes:
       - ${ARRPATH}JellySeerr/config:/app/config
     restart: unless-stopped
@@ -180,20 +203,20 @@ services:
 #  ██║     ██╔══██║██║     ██║██╔══██╗██╔══██╗██╔══╝  
 #  ╚██████╗██║  ██║███████╗██║██████╔╝██║  ██║███████╗
 #   ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝╚═════╝ ╚═╝  ╚═╝╚══════╝                                                  
-  calibre:
-    image: lscr.io/linuxserver/calibre:latest
-    container_name: calibre
-    volumes:
-      - ${ARRPATH}Calibre/config:/config
-      - ${ARRPATH}Readarr/books:/data/Books
-      - /mnt/usbMedia01:/mnt/usbMedia01
-      - /mnt/usbMedia02:/mnt/usbMedia02
-      - /mnt/usbMedia03:/mnt/usbMedia03      
-    ports:
-      - 8080:8080
-      - 8181:8181
-      - 8081:8081
-    restart: unless-stopped
+#  calibre:
+#    image: lscr.io/linuxserver/calibre:latest
+#    container_name: calibre
+#    volumes:
+#      - ${ARRPATH}Calibre/config:/config
+#      - ${ARRPATH}Readarr/books:/data/Books
+#      - /mnt/usbMedia01:/mnt/usbMedia01
+#      - /mnt/usbMedia02:/mnt/usbMedia02
+#      - /mnt/usbMedia03:/mnt/usbMedia03      
+#    ports:
+#      - 8080:8080
+#      - 8181:8181
+#      - 8081:8081
+#    restart: unless-stopped
 
 
 # ██████╗ ██╗     ███████╗██╗  ██╗
@@ -232,10 +255,6 @@ services:
     volumes:
       - ${ARRPATH}qbittorrent/config:/config
       - ${ARRPATH}Downloads:/downloads
-    ports:
-      - 8080:8080
-      - 6881:6881
-      - 6881:6881/udp
     environment:
       - WEBUI_PORT=8080
       - TORRENTING_PORT=6881
@@ -264,7 +283,5 @@ services:
     volumes:
       - ${ARRPATH}nzbget/config:/config
       - ${ARRPATH}Downloads:/downloads
-    ports:
-      - 6789:6789
     restart: unless-stopped                                     
 
